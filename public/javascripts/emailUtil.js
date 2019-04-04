@@ -27,7 +27,7 @@ exports.sendEmail = function (title,content) {
 
     let options = {
         from        : '"betApp" <731859615@qq.com>',
-        to          : '"zy" <731859615@qq.com>,"qy" <824722054@qq.com>',
+        to          : '"zy" <731859615@qq.com>,"ld" <467432550@qq.com>,"qy" <824722054@qq.com>',
         subject        :title,
         text          : content,
         html           : content,
