@@ -22,7 +22,7 @@ module.exports.getJson = function (callback) {
         };
 
         try {
-            let list = JSON.parse(body).d;
+            let list = JSON.parse(body);
             //
             // fs.writeFile("./ray.txt", JSON.stringify(list), error => {
             //     if (error) return console.log("写入文件失败,原因是" + error.message);
@@ -39,14 +39,6 @@ module.exports.getJson = function (callback) {
             })
             let duyingMatchList = [];
             let rfMatchListZhu = [];
-            let rfMatchListKe  = [];
-            matchList.map(function (item) {
-
-                if(item[4][1]=='2'){
-                    duyingMatchList.push(item);
-                }
-
-            })
             let array = [];
             let rfArrayZhu = [];
             let rfArrayKe = [];
@@ -57,13 +49,9 @@ module.exports.getJson = function (callback) {
                 let teamA = item[5][0];
                 let teamB = item[6][0];
 
-                let date = new Date(parseInt(item[7].substr(6, 13)));
-                let ts = date.getTime();
-                if(new Date().getTime()-ts <-1000000)
+
                 array.push({
-                    name:item[46],
-                    time:date2str(date),
-                    ts:date.getTime(),
+                    name:item[33],
                     dy: [
                         {
                             teamName:teamA,
@@ -85,13 +73,9 @@ module.exports.getJson = function (callback) {
             rfMatchListZhu.map(function (item) {
                 let teamA = item[5][0];
                 let teamB = item[6][0];
-                let date = new Date(parseInt(item[7].substr(6, 13)));
-                let ts = date.getTime();
-                if(new Date().getTime()-ts <-1000000)
+
                     rfArrayZhu.push({
-                        name:item[46],
-                        time:date2str(date),
-                        ts:date.getTime(),
+                        name:item[33],
                         rf: [[
                             {
                                 teamName:teamA,
@@ -110,33 +94,6 @@ module.exports.getJson = function (callback) {
 
             })
 
-            rfMatchListKe.map(function (item) {
-                let teamA = item[5][0];
-                let teamB = item[6][0];
-                let date = new Date(parseInt(item[7]));
-                let ts = date.getTime();
-                if(new Date().getTime()-ts <-1000000)
-                    rfArrayKe.push({
-                        name:item[46],
-                        time:date2str(date),
-                        ts:date.getTime(),
-                        rf: [[
-                            {
-                                teamName:teamA,
-                                rang:true,
-                                pei: item[10][6][4]
-                            },
-                            {
-                                teamName: teamB,
-                                rang:false,
-                                pei: item[10][6][7]
-                            }
-                        ]]
-                    })
-
-
-
-            })
 
             console.log(array.length)
 
@@ -182,9 +139,8 @@ module.exports.getJson = function (callback) {
             }
 
 
-            console.log(array.length)
 
-            callback(array)
+
 
 
 
@@ -199,8 +155,3 @@ module.exports.getJson = function (callback) {
 }
 
 
-function date2str(x,y) {
-    y = "yyyy-MM-d hh:mm:ss";
-    let z ={y:x.getFullYear(),M:x.getMonth()+1,d:x.getDate(),h:x.getHours(),m:x.getMinutes(),s:x.getSeconds()};
-    return y.replace(/(y+|M+|d+|h+|m+|s+)/g,function(v) {return ((v.length>1?"0":"")+eval('z.'+v.slice(-1))).slice(-(v.length>2?v.length:2))});
-}
