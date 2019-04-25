@@ -5,7 +5,10 @@ module.exports.getJson = function (callback) {
 
     let options = {
         method: 'POST',
-        url: 'https://imes-opebet.roshan88.com/Sportsbook/GetOddsData',
+        url: '' +
+            '' +
+            '' +
+            '',
         headers:
             {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
@@ -16,19 +19,8 @@ module.exports.getJson = function (callback) {
     };
 
     request(options, function (error, response, body) {
-        if (error) {
 
-            console.error(error)
-        };
-
-        try {
             let list = JSON.parse(body);
-            //
-            // fs.writeFile("./ray.txt", JSON.stringify(list), error => {
-            //     if (error) return console.log("写入文件失败,原因是" + error.message);
-            //     console.log("写入成功");
-            // });
-
             let matchList = [];
             list.map(function (item) {
                 item[10].map(function (match) {
@@ -145,9 +137,7 @@ module.exports.getJson = function (callback) {
 
 
           //  callback(array);
-        } catch (e) {
-            console.error(e)
-        }
+
 
 
     });
