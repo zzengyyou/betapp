@@ -1,5 +1,4 @@
 let esports = require('./public/javascripts/compare/esports/start');
-let football = require('./public/javascripts/compare/football/startFootBall');
 let config = require('./config');
 let timeInterval = require('./config').INTERVAL * 60 * 1000;
 let footballTimeInterval = require('./config').FOOTBALL_INTERVAL * 60 * 1000;

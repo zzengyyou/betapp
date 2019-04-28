@@ -1,33 +1,28 @@
 let sum = 0;
 let mailUtil = require('../../emailUtil');
 let SHUI_LINE = require('../../../../config').SHUI_LINE;
-let SHUI_LINE_2 =  require('../../../../config').SHUI_LINE_2;
 let historyTitles = {};
 let config = require('../../../../config');
 let email_interval = Math.ceil(config.EMAIL_INTERVAL * config.INTERVAL / 3);
 let hostname = require('os').hostname;
 let lowestShui = 1000;
-let stringSimilarity = require('string-similarity');
+
 module.exports.compareTwoTeamName = function (name1, name2) {
 
     let re = /[\u4e00-\u9fa5]/g;
-    let str1 = name1.replace(re, "").toLowerCase().replace("-", "").replace(".", "").replace(" ", "");
-    let str2 = name2.replace(re, "").toLowerCase().replace("-", "").replace(".", "").replace(" ", "");
+    let str1 = name1.replace(re, "").toLowerCase().replace(" ", "");
+    let str2 = name2.replace(re, "").toLowerCase().replace(" ", "");
 
     str1.length > 1 ? str1 = str1.toLowerCase() : str1 = name1.toLowerCase();
     str2.length > 1 ? str2 = str2.toLowerCase() : str2 = name2.toLowerCase();
 
-    return str2.indexOf(str1) > -1 || str1.indexOf(str2) > -1 || stringSimilarity.compareTwoStrings(str1, str2) > 0.6
+    return str2.indexOf(str1) > -1 || str1.indexOf(str2) > -1
 
 }
 
 module.exports.compareTwoData = function (dataOne, dataTwo, onCompareSuccess) {
-    if (dataOne.data.length < 1 || dataTwo.data.length < 1 || dataOne.plaName == dataTwo.plaName) {
-        return
-    }
     let data1 = dataOne.data;
     let data2 = dataTwo.data;
-
     let count = 0;
     let me = this;
     data1 && data1.map(function (item1, index1) {
@@ -77,7 +72,7 @@ module.exports.compareTwoData = function (dataOne, dataTwo, onCompareSuccess) {
                                     content += dataTwo.plaName + "---" + fupankouManx.teamName + "----赔率----" + fupankouManx.pei + '<br/>';
                                     content += "比赛日期: "+(item1.time||item2.time);
                                     if (!historyTitles[keyWord]) {
-                                        if (fupankou365.teamName != fupankouManx.teamName&&fupankou365.teamName&&fupankouManx.teamName&&!me.compareTwoTeamName(fupankou365.teamName, fupankouManx.teamName)) {
+                                        if (fupankou365.teamName != fupankouManx.teamName&&fupankou365.teamName&&fupankouManx.teamName) {
                                             mailUtil.sendEmail(title, content)
                                             historyTitles[keyWord] = true;
                                         }
